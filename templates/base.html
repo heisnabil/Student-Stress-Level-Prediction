@@ -52,13 +52,16 @@
 </head>
 <body>
     <canvas id="bg-canvas"></canvas>
-    <header class="flex justify-between items-center p-4">
-        <h1 class="text-2xl font-bold">🎓 Student Stress Analyzer</h1>
-        <nav>
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Sign Up</a>
-        </nav>
-    </header>
+   <header class="flex flex-wrap justify-between items-center p-4 bg-opacity-50 backdrop-blur-md bg-black">
+    <h1 class="text-2xl font-bold w-full sm:w-auto text-center sm:text-left mb-2 sm:mb-0">
+        🎓 Student Stress Analyzer
+    </h1>
+    <nav class="flex justify-center sm:justify-end w-full sm:w-auto space-x-4">
+        <a href="{{ url_for('login') }}" class="text-sm sm:text-base text-gray-200 hover:text-purple-300">Login</a>
+        <a href="{{ url_for('signup') }}" class="text-sm sm:text-base text-gray-200 hover:text-purple-300">Sign Up</a>
+    </nav>
+</header>
+
 
     <main class="p-6">
         {% block content %}{% endblock %}
