@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="glass max-w-lg mx-auto p-6 rounded-lg">
+    <h2 class="text-xl font-semibold text-center">Welcome, {{ session['username'] }}</h2>
+    <form method="POST" class="space-y-4">
+        <label class="block">
+            <span>Sleep Quality (1–10)</span>
+            <input type="number" name="SleepQuality" min="1" max="10" required
+                   class="mt-1 block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        </label>
+        <label class="block">
+            <span>Headaches per Week (0–7)</span>
+            <input type="number" name="HeadachesPerWeek" min="0" max="7" required
+                   class="mt-1 block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        </label>
+        <label class="block">
+            <span>Academic Performance (1–10)</span>
+            <input type="number" name="AcademicPerformance" min="1" max="10" required
+                   class="mt-1 block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        </label>
+        <label class="block">
+            <span>Study Load (1–10)</span>
+            <input type="number" name="StudyLoad" min="1" max="10" required
+                   class="mt-1 block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        </label>
+        <label class="block">
+            <span>Extracurricular Frequency (0–5)</span>
+            <input type="number" name="ExtracurricularFreq" min="0" max="5" required
+                   class="mt-1 block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        </label>
+        <button type="submit" class="btn-glow w-full">Analyze Stress</button>
+    </form>
+</div>
+{% endblock %}

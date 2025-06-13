@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="glass max-w-sm mx-auto p-6 rounded-lg">
+    <h2 class="text-xl font-semibold text-center">📝 Sign Up</h2>
+    <form action="/signup" method="POST" class="space-y-4">
+        <input type="text" name="username" placeholder="Enter username" required
+               class="block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        <input type="email" name="email" placeholder="Enter email" required
+               class="block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        <input type="password" name="password" placeholder="Enter password" required
+               class="block w-full p-2 rounded-md border border-gray-300 bg-white text-black">
+        <button type="submit" class="btn-glow w-full">Sign Up</button>
+    </form>
+    <p class="text-center mt-4">Already have an account?
+        <a href="/login" class="text-blue-400">Login here</a>
+    </p>
+</div>
+{% endblock %}

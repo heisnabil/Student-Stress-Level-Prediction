@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="glass max-w-lg mx-auto p-6 rounded-lg">
+    <h2 class="text-2xl font-semibold text-center">🧠 Predicted Stress Level: <strong>{{ prediction }}</strong></h2>
+    <p class="text-center"><strong>AI Tip:</strong> {{ ai_tip }}</p>
+    <h3 class="mt-4 text-xl">📊 Input Summary:</h3>
+    <ul class="list-disc pl-5">
+        {% for key, value in input_data.items() %}
+        <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+    <div class="mt-6">
+        <canvas id="barChart" width="400" height="200"></canvas>
+    </div>
+    <div class="text-center mt-4">
+        <a href="/dashboard" class="btn-glow">🔁 Check Again</a>
+    </div>
+</div>
+<script>
+    const inputData = {{ input_data | tojson }};
+    const ctx = document.getElementById('barChart').getContext('2d');
+
+    // Create a gradient for the bars
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, '#8b5cf6'); // Start color
+    gradient.addColorStop(1, '#4c1d95'); // End color
+
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(inputData),
+            datasets: [{
+                label: 'Your Input Data',
+                data: Object.values(inputData),
+                backgroundColor: gradient, // Use the gradient
+                borderColor: '#ffffff', // White border for contrast
+                borderWidth: 2,
+                hoverBackgroundColor: '#a78bfa', // Color on hover
+                hoverBorderColor: '#ffffff', // Border color on hover
+                hoverBorderWidth: 3,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Allow height to be flexible
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)', // Light grid lines
+                    },
+                    ticks: {
+                        color: '#ffffff', // Tick color
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#ffffff', // Tick color
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)', // Dark tooltip background
+                    titleColor: '#ffffff', // Tooltip title color
+                    bodyColor: '#ffffff', // Tooltip body color
+                    borderColor: '#8b5cf6', // Tooltip border color
+                    borderWidth: 1,
+                },
+                legend: {
+                    labels: {
+                        color: '#ffffff', // Legend text color
+                    }
+                }
+            },
+            animation: {
+                duration: 1000, // Animation duration
+                easing: 'easeOutBounce', // Easing function
+            }
+        }
+    });
+</script>
+
+{% endblock %}

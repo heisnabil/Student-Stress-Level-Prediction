@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Stress Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- ✅ Added Three.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a, #4c1d95);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1;
+        }
+        header {
+            position: sticky; top: 0; z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        nav a {
+            margin: 0 15px; color: #ddd; transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #8b5cf6;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+        }
+        .btn-glow {
+            background: linear-gradient(90deg, #8b5cf6, #4c1d95);
+            border: none; border-radius: 12px; padding: 10px 20px;
+            color: white; font-weight: bold; cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 20px #8b5cf6, 0 0 30px #4c1d95;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <header class="flex justify-between items-center p-4">
+        <h1 class="text-2xl font-bold">🎓 Student Stress Analyzer</h1>
+        <nav>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+        </nav>
+    </header>
+
+    <main class="p-6">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center p-4">
+        <p>© 2025 StressCare | Built with Nabil 😏</p>
+    </footer>
+
+    <!-- ✅ Three.js Background Animation Script -->
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Symbolic Stress Knot 3D Element
+        const geometry = new THREE.TorusKnotGeometry(1, 0.4, 100, 16);
+        const material = new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true });
+        const torusKnot = new THREE.Mesh(geometry, material);
+        scene.add(torusKnot);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            torusKnot.rotation.x += 0.01;
+            torusKnot.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive canvas
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
